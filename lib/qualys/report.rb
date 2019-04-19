@@ -28,6 +28,18 @@ module Qualys
 
         Report.new(response.parsed_response)
       end
+      
+      # returns a report object from qualys api if a report with the required id exists
+      def get_report(ref, format = 'csv_extended')
+        response = api_get('/scan/', query: {
+                            action: 'fetch',
+                            scan_ref: ref,
+                            mode: 'extended',
+                            output_format: format
+                          })
+
+        return response
+      end
 
       # create a report for the selected ip adress if specified. ips is a array of strings
       def launch(ips = [])
